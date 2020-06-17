@@ -1,18 +1,17 @@
 # RabbitMQ-RPC
 
-RabbitMQ-RPC is sample to ease RPC calls using RabbitMQ by proxying methods calls from shared interfaces from client to the server.
+RabbitMQ-RPC is an approach inspired by [RestEase](https://github.com/canton7/RestEase) to implement Remote Procedure Calls over RabbitMQ by proxying methods calls from from client to the server via shared interfaces.
 
-On client side, the shared interfaces are proxied by using the DynamixProxy class from System.Reflection. 
-The client executes a RPC call to the server, which calls the Invoke method of the DynamixProxy implementation class to:
+On client side, the shared RPC interface is proxied by using the DynamixProxy class from System.Reflection. 
+The client executes an interface method, which calls the 'Invoke()' method of the DynamixProxy implementation class to:
 - Create a dynamic object by mapping the method parameters as object properties
 - Copy the method parameter values to the object properties
 - Serialize the dynamic object as JSON string
 - Sends a message to the server queye by using the routing key 'Interfacename.Methodname' as 'IMyClass.MyMethod'
 
-On server side, same shared interface and its implementation class are assigned to a RPC controller, which invokes the methods from the implementation class through a RPC call.
+On server side, same shared RPC interface and its implementation class are assigned to a RPC controller, which invokes the methods of the implementation class through a RPC call from the client.
 
 When receiving a RPC call on server side:
-
 - The Controller.Invoke method is called by using routing key and JSON string
 - The routing key is validated against the assigned interface of the controller
 - A dynamic object is created using target method from RPC call
