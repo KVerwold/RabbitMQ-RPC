@@ -1,6 +1,6 @@
 # RabbitMQ-RPC
 
-RabbitMQ-RPC is an approach inspired by [RestEase](https://github.com/canton7/RestEase) to implement Remote Procedure Calls over RabbitMQ by proxying methods calls from from client to the server via shared interfaces.
+RabbitMQ-RPC is an approach inspired by [RestEase](https://github.com/canton7/RestEase) to implement Remote Procedure Calls over RabbitMQ by proxying methods calls from the client to the server via shared interfaces.
 
 On client side, the shared RPC interface is proxied by using the DynamixProxy class from System.Reflection. 
 The client executes an interface method, which calls the 'Invoke()' method of the DynamixProxy implementation class to:
